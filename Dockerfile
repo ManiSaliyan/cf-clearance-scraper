@@ -1,26 +1,15 @@
-FROM node:latest
+FROM node:18-slim
 
+# Install dependencies required by Puppeteer
 RUN apt-get update && apt-get install -y \
-    wget \
-    gnupg \
-    ca-certificates \
-    apt-transport-https \
-    chromium \
-    chromium-driver \
-    xvfb \
+    wget gnupg ca-certificates libx11-xcb1 libxcomposite1 libxdamage1 libxrandr2 \
+    libgbm1 libgtk-3-0 libasound2 libnss3 libxss1 fonts-liberation \
     && rm -rf /var/lib/apt/lists/*
 
-ENV CHROME_BIN=/usr/bin/chromium
-
 WORKDIR /app
-
 COPY package*.json ./
-
-RUN npm update
 RUN npm install
-RUN npm i -g pm2
 COPY . .
 
-EXPOSE 3000
-
-CMD ["pm2-runtime", "src/index.js"]
+EXPOSE 10000
+CMD ["npm", "start"]
