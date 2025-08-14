@@ -23,4 +23,4 @@ COPY . .
 
 EXPOSE 3000
 
-CMD ["pm2-runtime", "s.js"]
+CMD ["pm2-runtime", "src/s.js"]
